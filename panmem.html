@@ -1,234 +1,451 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panduan Member Final</title>
-<style>
-body { font-family:'Poppins',sans-serif; background:#f5f6fa; margin:0; padding:0; }
-header { position:sticky; top:0; background:#34495e; color:white; padding:20px; text-align:center; box-shadow:0 4px 6px rgba(0,0,0,0.1);}
-header h1 { margin-bottom:10px; }
-.controls { display:flex; justify-content:center; gap:10px; flex-wrap:wrap; margin-bottom:10px;}
-.controls select, .controls input, .controls button { padding:10px; border-radius:8px; border:none; }
-.controls select, .controls input { width:200px; }
-.controls button { background:#2ecc71; color:white; cursor:pointer; transition:0.2s; }
-.controls button:hover { background:#27ae60; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Premium Panel</title>
 
-.grid-container { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:20px; padding:20px; }
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-.guide-card { border-radius:12px; background:white; box-shadow:0 6px 12px rgba(0,0,0,0.1); display:flex; flex-direction:column; transition:transform 0.2s; }
-.guide-card:hover { transform:translateY(-5px); }
-.guide-header { background:#3498db; color:white; padding:15px; font-weight:bold; cursor:pointer; display:flex; align-items:center; justify-content:space-between; }
-.guide-header h3 { margin:0; display:flex; align-items:center; gap:8px; flex:1; }
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #020617, #0f172a);
+      color: white;
+      font-size: 14px;
+    }
 
-.guide-content { padding:15px; font-size:0.95rem; line-height:1.5; display:none; background:#ecf0f1; }
-.guide-flex { display:flex; gap:15px; align-items:flex-start; }
-.guide-flex ol { flex:1; margin:0; padding-left:20px; }
-.guide-flex img { max-width:150px; border-radius:8px; cursor:pointer; }
+    /* HEADER */
+    header {
+      padding: 20px;
+      text-align: center;
+    }
 
-.guide-actions { margin-top:10px; text-align:right; }
-.guide-actions button { margin-left:5px; padding:5px 10px; border:none; border-radius:5px; font-size:0.85rem; cursor:pointer; }
-button.edit { background:#f39c12; color:white; }
-button.delete { background:#e74c3c; color:white; }
-button.save { background:#2ecc71; color:white; }
-button.cancel { background:#95a5a6; color:white; }
-button.copy { background:#3498db; color:white; }
+    h2 {
+      margin: 0;
+      font-weight: 600;
+      font-size: 1.6rem;
+    }
 
-#addGuideSection { display:none; max-width:800px; margin:20px auto; background:#fff; padding:25px; border-radius:15px; box-shadow:0 6px 18px rgba(0,0,0,0.15);}
-#addGuideSection h2 { margin-bottom:20px; text-align:center; color:#34495e; }
-.form-group { margin-bottom:15px; display:flex; flex-direction:column; }
-.form-group label { font-weight:600; margin-bottom:5px; }
-.form-group input, .form-group textarea { padding:12px; border-radius:8px; border:1px solid #ccc; font-size:0.95rem; width:100%; }
-#addGuideBtn { padding:12px 25px; background:#2ecc71; color:white; border:none; border-radius:10px; font-size:1rem; cursor:pointer; display:block; margin:0 auto; transition:0.2s; }
-#addGuideBtn:hover { background:#27ae60; }
+    /* CONTROL */
+    .controls {
+      margin-top: 10px;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
 
-#imgModal { display:none; position:fixed; z-index:50; left:0; top:0; width:100%; height:100%; background:rgba(0,0,0,0.8); justify-content:center; align-items:center; }
-#imgModal img { max-width:90%; max-height:90%; border-radius:10px; }
-#imgModal span { position:absolute; top:20px; right:30px; font-size:2rem; color:white; cursor:pointer; }
+    input, select, button {
+      padding: 8px;
+      border-radius: 8px;
+      border: none;
+      font-size: 0.9rem;
+    }
 
-@media (max-width:600px){
-  .guide-flex { flex-direction:column; }
-  .guide-flex img { max-width:100%; }
-}
-</style>
+    input, select {
+      background: rgba(255, 255, 255, 0.1);
+      color: white;
+    }
+
+    button {
+      background: linear-gradient(45deg, #3b82f6, #9333ea);
+      color: white;
+      cursor: pointer;
+      font-size: 0.9rem;
+    }
+
+    /* GRID */
+    .grid {
+      padding: 15px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 12px;
+    }
+
+    /* CARD */
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-header {
+      padding: 12px;
+      background: linear-gradient(45deg, #3b82f6, #9333ea);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      font-size: 1rem;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 3px 6px;
+      border-radius: 8px;
+    }
+
+    .card-content {
+      display: none;
+      padding: 12px;
+    }
+
+    .step {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 6px;
+      border-radius: 8px;
+      margin-bottom: 5px;
+    }
+
+    .thumbnail {
+      width: 100%;
+      border-radius: 8px;
+      margin-top: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .thumbnail:hover {
+      transform: scale(1.05);
+    }
+
+    /* ACTION */
+    .actions {
+      margin-top: 8px;
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    /* FORM */
+    #form {
+      display: none;
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 15px;
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    #form h3 {
+      margin-top: 0;
+      font-size: 1.2rem;
+    }
+
+    /* FORM GROUP */
+    .form-group {
+      margin-bottom: 12px;
+    }
+
+    .form-group label {
+      font-size: 0.85rem;
+      opacity: 0.7;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      font-size: 0.9rem;
+    }
+
+    /* TEXTAREA */
+    textarea {
+      min-height: 100px;
+      resize: none;
+    }
+
+    /* 2 COL */
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    /* BUTTONS */
+    .btn-save,
+    .btn-cancel {
+      width: 48%;
+      padding: 10px;
+      border-radius: 12px;
+      background: linear-gradient(45deg, #3b82f6, #9333ea);
+      border: none;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-cancel {
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    /* TOAST */
+    #toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      padding: 8px 15px;
+      border-radius: 10px;
+      opacity: 0;
+      transition: .3s;
+    }
+
+    #toast.show {
+      opacity: 1;
+    }
+
+    /* Modal Gambar Besar */
+    #largeImageModal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+
+    #largeImageModal img {
+      max-width: 80%;
+      max-height: 80%;
+    }
+  </style>
 </head>
+
 <body>
 
 <header>
-<h1>Panduan Member Profesional</h1>
-<div class="controls">
-<select id="siteSelector">
-<option value="edan777">Edan777</option>
-<option value="republik62">Republik62</option>
-<option value="warga62">Warga62</option>
-<option value="istana62">Istana62</option>
-</select>
-<input type="text" id="searchInput" placeholder="Cari panduan...">
-<button id="showAddBtn">Tambah Panduan</button>
-</div>
+  <h2>ADMIN PANEL</h2>
+
+  <div class="controls">
+    <select id="filterSite">
+      <option value="all">Semua</option>
+      <option value="edan777">edan777</option>
+      <option value="republik62">republik62</option>
+      <option value="warga62">warga62</option>
+      <option value="istana62">istana62</option>
+    </select>
+
+    <input id="search" placeholder="Cari...">
+    <button onclick="openAdd()">+ Tambah</button>
+  </div>
 </header>
 
-<main>
-<section id="guidesContainer" class="grid-container"></section>
+<!-- FORM -->
+<div id="form">
+  <h3 id="formTitle">Tambah Data</h3>
 
-<section id="addGuideSection">
-<h2>Tambah Panduan Baru</h2>
-<div class="form-group">
-<label>Judul Panduan</label>
-<input type="text" id="newTitle" placeholder="Masukkan judul panduan">
-</div>
-<div class="form-group">
-<label>Isi Panduan (pisahkan step dengan enter)</label>
-<textarea id="newContent" placeholder="Step 1&#10;Step 2&#10;Step 3"></textarea>
-</div>
-<div class="form-group">
-<label>Link Gambar (opsional)</label>
-<input type="text" id="newImage" placeholder="Masukkan link gambar">
-<div id="imagePreview"></div>
-</div>
-<button id="addGuideBtn">Tambah Panduan</button>
-</section>
-</main>
+  <div class="form-group">
+    <label>Judul</label>
+    <input id="title">
+  </div>
 
-<div id="imgModal"><span onclick="document.getElementById('imgModal').style.display='none'">&times;</span><img id="modalImg"></div>
+  <div class="form-group">
+    <label>Isi</label>
+    <textarea id="content"></textarea>
+  </div>
+
+  <div class="form-row">
+    <div class="form-group">
+      <label>Site</label>
+      <select id="site">
+        <option value="edan777">edan777</option>
+        <option value="republik62">republik62</option>
+        <option value="warga62">warga62</option>
+        <option value="istana62">istana62</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Link Gambar</label>
+      <input id="image">
+    </div>
+  </div>
+
+  <button class="btn-save" onclick="save()">Simpan</button>
+  <button class="btn-cancel" onclick="cancel()">Batal</button>
+</div>
+
+<div id="list" class="grid"></div>
+<div id="toast"></div>
+
+<!-- Modal Gambar Besar -->
+<div id="largeImageModal" onclick="closeLargeImage()">
+  <img id="largeImage" src="" alt="Gambar Besar">
+</div>
 
 <script>
-let guidesData={
-edan777:[{title:"Cara Deposit", content:["Login akun","Klik menu DEPOSIT","Pilih metode pembayaran"], image:"https://via.placeholder.com/150"}],
-republik62:[],
-warga62:[],
-istana62:[]
-};
+const API = "https://script.google.com/macros/s/AKfycbyt69Xbn29z2CcDtWsqGM8vVHyqb6ZOPlO5Hxcr70hPzfK3vxQngZg8T3ezVQbooXFj/exec";
+const KEY = "12345";
 
-const siteSelector=document.getElementById('siteSelector');
-const searchInput=document.getElementById('searchInput');
-const guidesContainer=document.getElementById('guidesContainer');
-const newImageInput=document.getElementById('newImage');
-const imagePreview=document.getElementById('imagePreview');
-const addSection=document.getElementById('addGuideSection');
-const showAddBtn=document.getElementById('showAddBtn');
+let data = [], filteredData = [], editId = null;
 
-// Show/hide add form
-showAddBtn.addEventListener('click', ()=>{
-  addSection.style.display = addSection.style.display==='block'?'none':'block';
-  if(addSection.style.display==='block') addSection.scrollIntoView({behavior:'smooth'});
-});
+/* LOAD */
+async function load() {
+  const res = await fetch(API);
+  data = await res.json();
+  render();
+}
 
-// Render panduan
-function renderGuides(site){
-  const guides=guidesData[site]||[];
-  guidesContainer.innerHTML=guides.map((g,idx)=>`
-    <div class="guide-card" data-index="${idx}">
-      <div class="guide-header" onclick="toggleContent(${idx})">
-        <h3>📄 ${g.title}</h3>
+/* RENDER */
+function render() {
+  const f = filterSite.value;
+  const s = search.value.toLowerCase();
+
+  filteredData = data.filter(d =>
+    (f === "all" || d.site === f) &&
+    (d.title.toLowerCase().includes(s) || d.content.toLowerCase().includes(s))
+  );
+
+  list.innerHTML = filteredData.map((d, i) => {
+    const steps = d.content.split("\n").map(x => `<div class="step">✔ ${x}</div>`).join("");
+
+    return `
+    <div class="card">
+      <div class="card-header" onclick="toggle(${i})">
+        ${d.title}
+        <span class="badge">${d.site}</span>
       </div>
-      <div class="guide-content">
-        <div class="guide-flex">
-          <ol>${g.content.map((step,i)=>`<li>${step}</li>`).join('')}</ol>
-          ${g.image?`<img src="${g.image}" onclick="showModal(this.src)">`:''}
-        </div>
-        <div class="guide-actions">
-          <button class="edit" onclick="startEdit(${idx})">Edit</button>
-          <button class="delete" onclick="deleteGuide(${idx})">Hapus</button>
-          <button class="copy" onclick="copyContent(${idx})">Copy</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-}
 
-function toggleContent(idx){
-  const contents=document.querySelectorAll('.guide-content');
-  contents[idx].style.display=contents[idx].style.display==='block'?'none':'block';
-}
+      <div class="card-content" id="c${i}">
+        ${steps}
+        ${d.image ? `<img class="thumbnail" src="${d.image}" onclick="showLargeImage('${d.image}')">` : ""}
 
-// Edit inline
-function startEdit(idx){
-  const site=siteSelector.value;
-  const g=guidesData[site][idx];
-  const card=document.querySelector(`.guide-card[data-index="${idx}"]`);
-  const contentDiv=card.querySelector('.guide-content');
-  contentDiv.innerHTML=`
-    <div>
-      <input type="text" id="editTitle${idx}" value="${g.title}" style="width:100%;padding:8px;margin-bottom:8px;">
-      <textarea id="editContent${idx}" style="width:100%;height:80px;padding:8px;margin-bottom:8px;">${g.content.join('\n')}</textarea>
-      <input type="text" id="editImage${idx}" placeholder="Link gambar" style="width:100%;padding:8px;margin-bottom:8px;" value="${g.image||''}">
-      <div style="margin-top:5px;text-align:right;">
-        <button onclick="saveEdit(${idx})" class="save">Simpan</button>
-        <button onclick="cancelEdit(${idx})" class="cancel">Batal</button>
-      </div>
-    </div>
-  `;
-  contentDiv.style.display='block';
-}
-
-function saveEdit(idx){
-  const site=siteSelector.value;
-  const g=guidesData[site][idx];
-  g.title=document.getElementById(`editTitle${idx}`).value.trim();
-  g.content=document.getElementById(`editContent${idx}`).value.trim().split('\n');
-  g.image=document.getElementById(`editImage${idx}`).value.trim();
-  renderGuides(site);
-}
-
-function cancelEdit(idx){ renderGuides(siteSelector.value); }
-function deleteGuide(idx){ const site=siteSelector.value; if(confirm("Hapus panduan ini?")){ guidesData[site].splice(idx,1); renderGuides(site); } }
-
-// Copy step lengkap dengan nomor
-function copyContent(idx){
-  const site=siteSelector.value;
-  const g=guidesData[site][idx];
-  const text = g.content.map((step,i)=>`${i+1}. ${step}`).join('\n');
-  navigator.clipboard.writeText(text).then(()=>{ alert("Isi panduan berhasil dicopy!"); });
-}
-
-// Add panduan baru
-document.getElementById('addGuideBtn').addEventListener('click',()=>{
-  const site = siteSelector.value;
-  if(!guidesData[site]) guidesData[site] = [];
-  const title=document.getElementById('newTitle').value.trim();
-  const content=document.getElementById('newContent').value.trim().split('\n');
-  const image=document.getElementById('newImage').value.trim();
-  if(title && content.length>0){
-    guidesData[site].push({title, content, image});
-    document.getElementById('newTitle').value='';
-    document.getElementById('newContent').value='';
-    document.getElementById('newImage').value='';
-    imagePreview.innerHTML='';
-    addSection.style.display='none'; // form auto hide
-    renderGuides(site);
-  } else alert("Judul dan konten tidak boleh kosong!");
-});
-
-siteSelector.addEventListener('change',()=>{ renderGuides(siteSelector.value); searchInput.value=''; });
-searchInput.addEventListener('input',()=>{
-  const term=searchInput.value.toLowerCase();
-  const site=siteSelector.value;
-  const filtered=(guidesData[site]||[]).filter(g=> g.title.toLowerCase().includes(term)||g.content.join(' ').toLowerCase().includes(term));
-  guidesContainer.innerHTML=filtered.map((g,idx)=>`
-    <div class="guide-card" data-index="${idx}">
-      <div class="guide-header" onclick="toggleContent(${idx})">
-        <h3>📄 ${g.title}</h3>
-      </div>
-      <div class="guide-content">
-        <div class="guide-flex">
-          <ol>${g.content.map((step,i)=>`<li>${step}</li>`).join('')}</ol>
-          ${g.image?`<img src="${g.image}" onclick="showModal(this.src)">`:''}
-        </div>
-        <div class="guide-actions">
-          <button class="edit" onclick="startEdit(${idx})">Edit</button>
-          <button class="delete" onclick="deleteGuide(${idx})">Hapus</button>
-          <button class="copy" onclick="copyContent(${idx})">Copy</button>
+        <div class="actions">
+          <button onclick="copy(${i})">Copy</button>
+          <button onclick="edit(${i})">Edit</button>
+          <button onclick="del('${d.uid}')">Hapus</button>
         </div>
       </div>
     </div>
-  `).join('');
-});
+    `;
+  }).join("");
+}
 
-newImageInput.addEventListener('input',()=>{ const url=newImageInput.value.trim(); imagePreview.innerHTML=url?`<img src="${url}">`:''; });
-function showModal(src){ const modal=document.getElementById('imgModal'); modal.style.display='flex'; document.getElementById('modalImg').src=src; }
+/* TOGGLE */
+function toggle(i) {
+  const el = document.getElementById("c" + i);
+  el.style.display = el.style.display === "block" ? "none" : "block";
+}
 
-renderGuides(siteSelector.value);
+/* COPY */
+function copy(i) {
+  const d = filteredData[i];
+  let text = `${d.title}\n\n${d.content}`;
+  if (d.image) text += `\n\n${d.image}`;
+  navigator.clipboard.writeText(text);
+  showToast("Copied!");
+}
+
+/* TOAST */
+function showToast(msg) {
+  toast.innerText = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), 2000);
+}
+
+/* ADD */
+function openAdd() {
+  editId = null;
+  formTitle.innerText = "Tambah Data";
+
+  title.value = "";
+  content.value = "";
+  image.value = "";
+  site.value = "edan777";
+
+  form.style.display = "block";
+}
+
+/* EDIT */
+function edit(i) {
+  const d = filteredData[i];
+  editId = d.uid;
+
+  formTitle.innerText = "Edit Data";
+
+  title.value = d.title;
+  content.value = d.content;
+  image.value = d.image;
+  site.value = d.site;
+
+  form.style.display = "block";
+}
+
+/* SAVE */
+async function save() {
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({
+      key: KEY,
+      action: editId ? "edit" : "add",
+      uid: editId,
+      site: site.value,
+      title: title.value,
+      content: content.value,
+      image: image.value
+    })
+  });
+
+  editId = null;
+  form.style.display = "none";
+  load();
+}
+
+/* DELETE */
+async function del(uid) {
+  await fetch(API, {
+    method: "POST",
+    body: JSON.stringify({ key: KEY, action: "delete", uid })
+  });
+  load();
+}
+
+/* CANCEL */
+function cancel() {
+  form.style.display = "none";
+  editId = null;
+}
+
+/* Gambar Besar */
+function showLargeImage(src) {
+  const modal = document.getElementById("largeImageModal");
+  const largeImage = document.getElementById("largeImage");
+  largeImage.src = src;
+  modal.style.display = "flex";
+}
+
+function closeLargeImage() {
+  const modal = document.getElementById("largeImageModal");
+  modal.style.display = "none";
+}
+
+filterSite.onchange = render;
+search.oninput = render;
+
+load();
 </script>
 
 </body>
