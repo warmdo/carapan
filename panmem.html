@@ -1,245 +1,236 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Admin Premium Panel</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Web Depan Panel</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #020617, #0f172a);
-      color: white;
-      font-size: 14px;
-    }
+<style>
+:root{
+  --gold:#d4af37;
+}
 
-    /* HEADER */
-    header {
-      padding: 20px;
-      text-align: center;
-    }
+body{
+  margin:0;
+  font-family:'Poppins',sans-serif;
+  color:white;
 
-    h2 {
-      margin: 0;
-      font-weight: 600;
-      font-size: 1.6rem;
-    }
+  /* 🔥 BACKGROUND BARU */
+  background:url('https://i.ibb.co/BVqv6KG1/pxfuel-1.jpg') no-repeat center;
+  background-size:cover;
+}
 
-    /* CONTROL */
-    .controls {
-      margin-top: 10px;
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 10px;
-    }
+/* 🔥 DARK LAYER (BIAR TEKS JELAS) */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.5),
+    rgba(0,0,0,0.8)
+  );
+  z-index:-2;
+}
 
-    input, select, button {
-      padding: 8px;
-      border-radius: 8px;
-      border: none;
-      font-size: 0.9rem;
-    }
+/* 🔥 GOLD AMBIENT */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(circle at 50% 30%, rgba(212,175,55,0.25), transparent 60%);
+  z-index:-1;
+}
 
-    input, select {
-      background: rgba(255, 255, 255, 0.1);
-      color: white;
-    }
+/* ===== LAYOUT ===== */
+.container{display:flex;}
 
-    button {
-      background: linear-gradient(45deg, #3b82f6, #9333ea);
-      color: white;
-      cursor: pointer;
-      font-size: 0.9rem;
-    }
+.sidebar{
+  width:220px;
+  height:100vh;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(12px);
+  padding:20px;
+}
 
-    /* GRID */
-    .grid {
-      padding: 15px;
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
-      gap: 12px;
-    }
+.menu div{
+  padding:10px;
+  margin-bottom:8px;
+  border-radius:8px;
+  cursor:pointer;
+}
+.menu div.active,
+.menu div:hover{
+  background:linear-gradient(45deg,var(--gold),#ff6a00);
+}
 
-    /* CARD */
-    .card {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
+/* MAIN */
+.main{flex:1;padding:20px;}
+.page{display:none;}
+.page.active{display:block;}
 
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-    }
+/* STATS */
+.stats{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:10px;
+}
+.stat{
+  background:rgba(255,255,255,0.05);
+  padding:15px;
+  border-radius:10px;
+  text-align:center;
+}
 
-    .card-header {
-      padding: 12px;
-      background: linear-gradient(45deg, #3b82f6, #9333ea);
-      cursor: pointer;
-      display: flex;
-      justify-content: space-between;
-      font-size: 1rem;
-    }
+/* TOPBAR */
+.topbar{display:flex;gap:10px;margin-bottom:10px;}
 
-    .badge {
-      font-size: 0.75rem;
-      background: rgba(255, 255, 255, 0.2);
-      padding: 3px 6px;
-      border-radius: 8px;
-    }
+/* GRID */
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+  gap:12px;
+}
 
-    .card-content {
-      display: none;
-      padding: 12px;
-    }
+/* CARD */
+.card{
+  background:rgba(0,0,0,0.45);
+  border-radius:12px;
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.05);
+  transition:.3s;
+}
+.card:hover{
+  transform:translateY(-5px);
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+}
 
-    .step {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 6px;
-      border-radius: 8px;
-      margin-bottom: 5px;
-    }
+/* BRAND COLOR */
+.edan777{ background:linear-gradient(45deg,#ffd700,#ff8c00); }
+.republik62{ background:linear-gradient(45deg,#3b82f6,#1e40af); }
+.warga62{ background:linear-gradient(45deg,#22c55e,#166534); }
+.istana62{ background:linear-gradient(45deg,#ef4444,#7f1d1d); }
 
-    .thumbnail {
-      width: 100%;
-      border-radius: 8px;
-      margin-top: 8px;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
+.card-header{
+  padding:10px;
+  display:flex;
+  justify-content:space-between;
+  cursor:pointer;
+}
 
-    .thumbnail:hover {
-      transform: scale(1.05);
-    }
+.site-tag{
+  font-size:11px;
+  padding:3px 6px;
+  border-radius:6px;
+  background:rgba(0,0,0,0.4);
+}
 
-    /* ACTION */
-    .actions {
-      margin-top: 8px;
-      display: flex;
-      justify-content: flex-end;
-      gap: 8px;
-    }
+/* CONTENT */
+.card-content{
+  max-height:0;
+  overflow:hidden;
+  transition:.3s;
+}
+.card-content.active{
+  max-height:260px;
+  overflow:auto;
+}
 
-    /* FORM */
-    #form {
-      display: none;
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      border-radius: 15px;
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
+.step{
+  padding:6px;
+  margin:6px;
+  background:rgba(255,255,255,0.05);
+  border-radius:6px;
+}
 
-    #form h3 {
-      margin-top: 0;
-      font-size: 1.2rem;
-    }
+/* IMAGE */
+.thumbnail{
+  width:90%;
+  margin:10px auto;
+  display:block;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    /* FORM GROUP */
-    .form-group {
-      margin-bottom: 12px;
-    }
+/* BUTTON */
+.actions{
+  display:flex;
+  gap:5px;
+  padding:8px;
+}
+button{
+  flex:1;
+  padding:6px;
+  border:none;
+  border-radius:6px;
+  background:linear-gradient(45deg,var(--gold),orange);
+  cursor:pointer;
+}
 
-    .form-group label {
-      font-size: 0.85rem;
-      opacity: 0.7;
-      display: block;
-      margin-bottom: 4px;
-    }
+/* FORM */
+#form{
+  display:none;
+  margin-bottom:10px;
+  background:rgba(0,0,0,0.6);
+  padding:10px;
+  border-radius:10px;
+}
 
-    .form-group input,
-    .form-group textarea,
-    .form-group select {
-      width: 100%;
-      padding: 10px;
-      border-radius: 8px;
-      border: none;
-      background: rgba(255, 255, 255, 0.08);
-      color: white;
-      font-size: 0.9rem;
-    }
+/* MODAL */
+#imageModal{
+  display:none;
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.9);
+  justify-content:center;
+  align-items:center;
+}
 
-    /* TEXTAREA */
-    textarea {
-      min-height: 100px;
-      resize: none;
-    }
-
-    /* 2 COL */
-    .form-row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    /* BUTTONS */
-    .btn-save,
-    .btn-cancel {
-      width: 48%;
-      padding: 10px;
-      border-radius: 12px;
-      background: linear-gradient(45deg, #3b82f6, #9333ea);
-      border: none;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .btn-cancel {
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    /* TOAST */
-    #toast {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111;
-      padding: 8px 15px;
-      border-radius: 10px;
-      opacity: 0;
-      transition: .3s;
-    }
-
-    #toast.show {
-      opacity: 1;
-    }
-
-    /* Modal Gambar Besar */
-    #largeImageModal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      justify-content: center;
-      align-items: center;
-      z-index: 100;
-    }
-
-    #largeImageModal img {
-      max-width: 80%;
-      max-height: 80%;
-    }
-  </style>
+/* TOAST */
+#toast{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:black;
+  padding:10px;
+  border-radius:10px;
+  opacity:0;
+}
+#toast.show{opacity:1;}
+</style>
 </head>
 
 <body>
 
-<header>
-  <h2>ADMIN PANEL</h2>
+<div class="container">
 
-  <div class="controls">
+<div class="sidebar">
+  <h3>Web Depan Panel</h3>
+  <div class="menu">
+    <div id="btnDashboard" class="active" onclick="showPage('dashboard')">Dashboard</div>
+    <div id="btnData" onclick="showPage('data')">Data</div>
+  </div>
+</div>
+
+<div class="main">
+
+<div id="dashboardPage" class="page active">
+  <div class="stats">
+    <div class="stat">Total: <span id="total">0</span></div>
+    <div class="stat">edan777: <span id="s1">0</span></div>
+    <div class="stat">republik62: <span id="s2">0</span></div>
+    <div class="stat">warga62: <span id="s3">0</span></div>
+    <div class="stat">istana62: <span id="s4">0</span></div>
+  </div>
+</div>
+
+<div id="dataPage" class="page">
+
+  <div class="topbar">
     <select id="filterSite">
       <option value="all">Semua</option>
       <option value="edan777">edan777</option>
@@ -251,199 +242,124 @@
     <input id="search" placeholder="Cari...">
     <button onclick="openAdd()">+ Tambah</button>
   </div>
-</header>
 
-<!-- FORM -->
-<div id="form">
-  <h3 id="formTitle">Tambah Data</h3>
+  <div id="form">
+    <input id="title" placeholder="Judul">
+    <textarea id="content" placeholder="Isi"></textarea>
 
-  <div class="form-group">
-    <label>Judul</label>
-    <input id="title">
+    <select id="site">
+      <option value="edan777">edan777</option>
+      <option value="republik62">republik62</option>
+      <option value="warga62">warga62</option>
+      <option value="istana62">istana62</option>
+    </select>
+
+    <input id="image" placeholder="Link Gambar">
+
+    <button onclick="save()">Simpan</button>
+    <button onclick="cancel()">Batal</button>
   </div>
 
-  <div class="form-group">
-    <label>Isi</label>
-    <textarea id="content"></textarea>
-  </div>
+  <div id="list" class="grid"></div>
 
-  <div class="form-row">
-    <div class="form-group">
-      <label>Site</label>
-      <select id="site">
-        <option value="edan777">edan777</option>
-        <option value="republik62">republik62</option>
-        <option value="warga62">warga62</option>
-        <option value="istana62">istana62</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Link Gambar</label>
-      <input id="image">
-    </div>
-  </div>
-
-  <button class="btn-save" onclick="save()">Simpan</button>
-  <button class="btn-cancel" onclick="cancel()">Batal</button>
 </div>
 
-<div id="list" class="grid"></div>
+</div>
+</div>
+
+<div id="imageModal" onclick="closeImage()">
+  <img id="modalImg" style="max-width:80%;max-height:80%;">
+</div>
+
 <div id="toast"></div>
 
-<!-- Modal Gambar Besar -->
-<div id="largeImageModal" onclick="closeLargeImage()">
-  <img id="largeImage" src="" alt="Gambar Besar">
-</div>
-
 <script>
-const API = "https://script.google.com/macros/s/AKfycbyt69Xbn29z2CcDtWsqGM8vVHyqb6ZOPlO5Hxcr70hPzfK3vxQngZg8T3ezVQbooXFj/exec";
-const KEY = "12345";
+const API="https://script.google.com/macros/s/AKfycbyt69Xbn29z2CcDtWsqGM8vVHyqb6ZOPlO5Hxcr70hPzfK3vxQngZg8T3ezVQbooXFj/exec";
+const KEY="12345";
 
-let data = [], filteredData = [], editId = null;
+let data=[],filteredData=[],editId=null;
 
-/* LOAD */
-async function load() {
-  const res = await fetch(API);
-  data = await res.json();
+function showPage(p){
+  document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));
+  document.querySelectorAll(".menu div").forEach(x=>x.classList.remove("active"));
+
+  if(p==="dashboard"){
+    dashboardPage.classList.add("active");
+    btnDashboard.classList.add("active");
+  }else{
+    dataPage.classList.add("active");
+    btnData.classList.add("active");
+  }
+}
+
+async function load(){
+  const res=await fetch(API);
+  data=await res.json();
   render();
 }
 
-/* RENDER */
-function render() {
-  const f = filterSite.value;
-  const s = search.value.toLowerCase();
+function render(){
+  total.innerText=data.length;
+  s1.innerText=data.filter(x=>x.site==="edan777").length;
+  s2.innerText=data.filter(x=>x.site==="republik62").length;
+  s3.innerText=data.filter(x=>x.site==="warga62").length;
+  s4.innerText=data.filter(x=>x.site==="istana62").length;
 
-  filteredData = data.filter(d =>
-    (f === "all" || d.site === f) &&
-    (d.title.toLowerCase().includes(s) || d.content.toLowerCase().includes(s))
+  const f=filterSite.value;
+  const s=search.value.toLowerCase();
+
+  filteredData=data.filter(d=>
+    (f==="all"||d.site===f)&&
+    d.title.toLowerCase().includes(s)
   );
 
-  list.innerHTML = filteredData.map((d, i) => {
-    const steps = d.content.split("\n").map(x => `<div class="step">✔ ${x}</div>`).join("");
+  list.innerHTML=filteredData.map((d,i)=>`
+  <div class="card">
+    <div class="card-header ${d.site}" onclick="toggle(${i})">
+      <div>${d.title}</div>
+      <div class="site-tag">${d.site}</div>
+    </div>
 
-    return `
-    <div class="card">
-      <div class="card-header" onclick="toggle(${i})">
-        ${d.title}
-        <span class="badge">${d.site}</span>
-      </div>
+    <div class="card-content" id="c${i}">
+      ${d.content.split("\\n").map(x=>`<div class="step">✔ ${x}</div>`).join("")}
 
-      <div class="card-content" id="c${i}">
-        ${steps}
-        ${d.image ? `<img class="thumbnail" src="${d.image}" onclick="showLargeImage('${d.image}')">` : ""}
+      ${d.image?`<img src="${d.image}" class="thumbnail" onclick="showImage('${d.image}')">`:''}
 
-        <div class="actions">
-          <button onclick="copy(${i})">Copy</button>
-          <button onclick="edit(${i})">Edit</button>
-          <button onclick="del('${d.uid}')">Hapus</button>
-        </div>
+      <div class="actions">
+        <button onclick="copy(${i})">Copy</button>
+        <button onclick="edit(${i})">Edit</button>
+        <button onclick="del('${d.uid}')">Hapus</button>
       </div>
     </div>
-    `;
-  }).join("");
+  </div>
+  `).join("");
 }
 
-/* TOGGLE */
-function toggle(i) {
-  const el = document.getElementById("c" + i);
-  el.style.display = el.style.display === "block" ? "none" : "block";
+function toggle(i){
+  document.getElementById("c"+i).classList.toggle("active");
 }
 
-/* COPY */
-function copy(i) {
-  const d = filteredData[i];
-  let text = `${d.title}\n\n${d.content}`;
-  if (d.image) text += `\n\n${d.image}`;
+function copy(i){
+  const d=filteredData[i];
+  let text=`${d.title}\n\n${d.content}`;
+  if(d.image) text+=`\n\n${d.image}`;
   navigator.clipboard.writeText(text);
-  showToast("Copied!");
-}
 
-/* TOAST */
-function showToast(msg) {
-  toast.innerText = msg;
+  toast.innerText="Copied lengkap!";
   toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2000);
+  setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-/* ADD */
-function openAdd() {
-  editId = null;
-  formTitle.innerText = "Tambah Data";
-
-  title.value = "";
-  content.value = "";
-  image.value = "";
-  site.value = "edan777";
-
-  form.style.display = "block";
+function showImage(src){
+  modalImg.src=src;
+  imageModal.style.display="flex";
+}
+function closeImage(){
+  imageModal.style.display="none";
 }
 
-/* EDIT */
-function edit(i) {
-  const d = filteredData[i];
-  editId = d.uid;
-
-  formTitle.innerText = "Edit Data";
-
-  title.value = d.title;
-  content.value = d.content;
-  image.value = d.image;
-  site.value = d.site;
-
-  form.style.display = "block";
-}
-
-/* SAVE */
-async function save() {
-  await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({
-      key: KEY,
-      action: editId ? "edit" : "add",
-      uid: editId,
-      site: site.value,
-      title: title.value,
-      content: content.value,
-      image: image.value
-    })
-  });
-
-  editId = null;
-  form.style.display = "none";
-  load();
-}
-
-/* DELETE */
-async function del(uid) {
-  await fetch(API, {
-    method: "POST",
-    body: JSON.stringify({ key: KEY, action: "delete", uid })
-  });
-  load();
-}
-
-/* CANCEL */
-function cancel() {
-  form.style.display = "none";
-  editId = null;
-}
-
-/* Gambar Besar */
-function showLargeImage(src) {
-  const modal = document.getElementById("largeImageModal");
-  const largeImage = document.getElementById("largeImage");
-  largeImage.src = src;
-  modal.style.display = "flex";
-}
-
-function closeLargeImage() {
-  const modal = document.getElementById("largeImageModal");
-  modal.style.display = "none";
-}
-
-filterSite.onchange = render;
-search.oninput = render;
+filterSite.onchange=render;
+search.oninput=render;
 
 load();
 </script>
