@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Web Depan Panel</title>
+<title>Premium Panel</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
@@ -15,41 +15,24 @@
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
-  color:white;
-
-  /* 🔥 BACKGROUND BARU */
-  background:url('https://i.ibb.co/BVqv6KG1/pxfuel-1.jpg') no-repeat center;
-  background-size:cover;
-}
-
-/* 🔥 DARK LAYER (BIAR TEKS JELAS) */
-body::before{
-  content:"";
-  position:fixed;
-  inset:0;
-  background:linear-gradient(
-    to bottom,
-    rgba(0,0,0,0.5),
-    rgba(0,0,0,0.8)
-  );
-  z-index:-2;
-}
-
-/* 🔥 GOLD AMBIENT */
-body::after{
-  content:"";
-  position:fixed;
-  inset:0;
   background:
-    radial-gradient(circle at 50% 30%, rgba(212,175,55,0.25), transparent 60%);
-  z-index:-1;
+    radial-gradient(circle at 20% 20%, rgba(255,215,0,0.15), transparent 40%),
+    radial-gradient(circle at 80% 30%, rgba(255,0,0,0.15), transparent 40%),
+    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
+    url('https://i.ibb.co/qYZSvc9N/pxfuel.jpg') center/cover no-repeat;
+  color:white;
 }
+
+/* ===== BRAND COLORS ===== */
+.edan777 { background: linear-gradient(45deg,#d4af37,#b8962e); }
+.repulik62 { background: linear-gradient(45deg,#3b82f6,#1e40af); }
+.warga62 { background: linear-gradient(45deg,#22c55e,#166534); }
+.istana62 { background: linear-gradient(45deg,#ef4444,#7f1d1d); }
 
 /* ===== LAYOUT ===== */
 .container{display:flex;}
-
 .sidebar{
-  width:220px;
+  width:210px;
   height:100vh;
   background:rgba(0,0,0,0.6);
   backdrop-filter:blur(12px);
@@ -64,10 +47,9 @@ body::after{
 }
 .menu div.active,
 .menu div:hover{
-  background:linear-gradient(45deg,var(--gold),#ff6a00);
+  background:linear-gradient(45deg,var(--gold),#8b0000);
 }
 
-/* MAIN */
 .main{flex:1;padding:20px;}
 .page{display:none;}
 .page.active{display:block;}
@@ -80,13 +62,10 @@ body::after{
 }
 .stat{
   background:rgba(255,255,255,0.05);
-  padding:15px;
+  padding:14px;
   border-radius:10px;
   text-align:center;
 }
-
-/* TOPBAR */
-.topbar{display:flex;gap:10px;margin-bottom:10px;}
 
 /* GRID */
 .grid{
@@ -99,28 +78,24 @@ body::after{
 .card{
   background:rgba(0,0,0,0.45);
   border-radius:12px;
-  backdrop-filter:blur(10px);
+  backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,0.05);
   transition:.3s;
 }
 .card:hover{
-  transform:translateY(-5px);
-  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  transform:translateY(-4px);
 }
 
-/* BRAND COLOR */
-.edan777{ background:linear-gradient(45deg,#ffd700,#ff8c00); }
-.republik62{ background:linear-gradient(45deg,#3b82f6,#1e40af); }
-.warga62{ background:linear-gradient(45deg,#22c55e,#166534); }
-.istana62{ background:linear-gradient(45deg,#ef4444,#7f1d1d); }
-
+/* HEADER */
 .card-header{
   padding:10px;
   display:flex;
   justify-content:space-between;
   cursor:pointer;
+  align-items:center;
 }
 
+/* BRAND TAG */
 .site-tag{
   font-size:11px;
   padding:3px 6px;
@@ -139,6 +114,7 @@ body::after{
   overflow:auto;
 }
 
+/* STEP */
 .step{
   padding:6px;
   margin:6px;
@@ -155,7 +131,7 @@ body::after{
   cursor:pointer;
 }
 
-/* BUTTON */
+/* ACTION */
 .actions{
   display:flex;
   gap:5px;
@@ -174,9 +150,17 @@ button{
 #form{
   display:none;
   margin-bottom:10px;
-  background:rgba(0,0,0,0.6);
+  background:rgba(0,0,0,0.5);
   padding:10px;
   border-radius:10px;
+}
+
+input,select,textarea{
+  width:100%;
+  margin-bottom:6px;
+  padding:8px;
+  border:none;
+  border-radius:6px;
 }
 
 /* MODAL */
@@ -209,7 +193,7 @@ button{
 <div class="container">
 
 <div class="sidebar">
-  <h3>Web Depan Panel</h3>
+  <h3>WEB DEPAN PANEL</h3>
   <div class="menu">
     <div id="btnDashboard" class="active" onclick="showPage('dashboard')">Dashboard</div>
     <div id="btnData" onclick="showPage('data')">Data</div>
@@ -268,7 +252,7 @@ button{
 </div>
 
 <div id="imageModal" onclick="closeImage()">
-  <img id="modalImg" style="max-width:80%;max-height:80%;">
+  <img id="modalImg" style="max-width:80%; max-height:80%;">
 </div>
 
 <div id="toast"></div>
@@ -321,7 +305,7 @@ function render(){
     </div>
 
     <div class="card-content" id="c${i}">
-      ${d.content.split("\\n").map(x=>`<div class="step">✔ ${x}</div>`).join("")}
+      ${d.content.split("\n").map(x=>`<div class="step">✔ ${x}</div>`).join("")}
 
       ${d.image?`<img src="${d.image}" class="thumbnail" onclick="showImage('${d.image}')">`:''}
 
@@ -339,13 +323,52 @@ function toggle(i){
   document.getElementById("c"+i).classList.toggle("active");
 }
 
+function openAdd(){ editId=null; form.style.display="block"; }
+
+function edit(i){
+  const d=filteredData[i];
+  editId=d.uid;
+  title.value=d.title;
+  content.value=d.content;
+  image.value=d.image;
+  site.value=d.site;
+  form.style.display="block";
+}
+
+async function save(){
+  await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({
+      key:KEY,
+      action:editId?"edit":"add",
+      uid:editId,
+      site:site.value,
+      title:title.value,
+      content:content.value,
+      image:image.value
+    })
+  });
+  form.style.display="none";
+  load();
+}
+
+async function del(uid){
+  if(!confirm("Hapus data?"))return;
+  await fetch(API,{
+    method:"POST",
+    body:JSON.stringify({key:KEY,action:"delete",uid})
+  });
+  load();
+}
+
+function cancel(){ form.style.display="none"; }
+
 function copy(i){
   const d=filteredData[i];
   let text=`${d.title}\n\n${d.content}`;
   if(d.image) text+=`\n\n${d.image}`;
   navigator.clipboard.writeText(text);
-
-  toast.innerText="Copied lengkap!";
+  toast.innerText="Copied!";
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
@@ -354,9 +377,7 @@ function showImage(src){
   modalImg.src=src;
   imageModal.style.display="flex";
 }
-function closeImage(){
-  imageModal.style.display="none";
-}
+function closeImage(){ imageModal.style.display="none"; }
 
 filterSite.onchange=render;
 search.oninput=render;
