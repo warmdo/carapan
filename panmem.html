@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Premium Panel</title>
+<title>Ultra Glass Panel</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
@@ -12,30 +12,34 @@
   --gold:#d4af37;
 }
 
+/* ===== BACKGROUND ===== */
 body{
   margin:0;
   font-family:'Poppins',sans-serif;
   background:
-    radial-gradient(circle at 20% 20%, rgba(255,215,0,0.15), transparent 40%),
+    radial-gradient(circle at 20% 20%, rgba(255,215,0,0.2), transparent 40%),
     radial-gradient(circle at 80% 30%, rgba(255,0,0,0.15), transparent 40%),
-    linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)),
-    url('https://i.ibb.co/qYZSvc9N/pxfuel.jpg') center/cover no-repeat;
+    linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.85)),
+    url('https://i.ibb.co/570GsXq/pxfuel-3.jpg') center/cover no-repeat;
   color:white;
 }
 
-/* ===== BRAND COLORS ===== */
-.edan777 { background: linear-gradient(45deg,#d4af37,#b8962e); }
-.repulik62 { background: linear-gradient(45deg,#3b82f6,#1e40af); }
-.warga62 { background: linear-gradient(45deg,#22c55e,#166534); }
-.istana62 { background: linear-gradient(45deg,#ef4444,#7f1d1d); }
+/* overlay ringan */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:linear-gradient(120deg, rgba(255,255,255,0.05), transparent 40%);
+  pointer-events:none;
+}
 
 /* ===== LAYOUT ===== */
 .container{display:flex;}
+
 .sidebar{
   width:210px;
   height:100vh;
-  background:rgba(0,0,0,0.6);
-  backdrop-filter:blur(12px);
+  background:rgba(0,0,0,0.4);
   padding:20px;
 }
 
@@ -50,11 +54,50 @@ body{
   background:linear-gradient(45deg,var(--gold),#8b0000);
 }
 
-.main{flex:1;padding:20px;}
+.main{
+  flex:1;
+  padding:20px;
+}
+
+/* ===== PAGE ===== */
 .page{display:none;}
 .page.active{display:block;}
 
-/* STATS */
+/* ===== DATA GLASS ===== */
+#dataPage{
+  background:rgba(0,0,0,0.2);
+  border-radius:16px;
+  padding:15px;
+}
+
+/* ===== TOPBAR ===== */
+.topbar{
+  display:flex;
+  gap:10px;
+  margin-bottom:12px;
+  padding:10px;
+  background:rgba(255,255,255,0.04);
+  border-radius:12px;
+}
+
+.topbar input,
+.topbar select{
+  background:rgba(255,255,255,0.08);
+  color:white;
+  border:none;
+  border-radius:8px;
+  padding:8px;
+}
+
+.topbar button{
+  background:linear-gradient(45deg,#d4af37,#ffcc00);
+  border:none;
+  border-radius:8px;
+  padding:8px 12px;
+  cursor:pointer;
+}
+
+/* ===== STATS ===== */
 .stats{
   display:grid;
   grid-template-columns:repeat(5,1fr);
@@ -67,23 +110,41 @@ body{
   text-align:center;
 }
 
-/* GRID */
+/* ===== GRID ===== */
 .grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
   gap:12px;
 }
 
-/* CARD */
+/* ===== CARD ULTRA GLASS ===== */
 .card{
-  background:rgba(0,0,0,0.45);
-  border-radius:12px;
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.05);
+  position:relative;
+  border-radius:14px;
+  padding:2px;
+  background:linear-gradient(120deg, rgba(255,255,255,0.15), transparent);
   transition:.3s;
 }
+
+.card-inner{
+  background:rgba(0,0,0,0.35);
+  border-radius:12px;
+  overflow:hidden;
+  position:relative;
+}
+
+.card-inner::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,0.08), transparent);
+  pointer-events:none;
+}
+
 .card:hover{
-  transform:translateY(-4px);
+  transform:translateY(-6px) scale(1.02);
+  box-shadow:0 10px 30px rgba(0,0,0,0.4),
+             0 0 20px rgba(212,175,55,0.2);
 }
 
 /* HEADER */
@@ -92,10 +153,8 @@ body{
   display:flex;
   justify-content:space-between;
   cursor:pointer;
-  align-items:center;
 }
 
-/* BRAND TAG */
 .site-tag{
   font-size:11px;
   padding:3px 6px;
@@ -114,21 +173,11 @@ body{
   overflow:auto;
 }
 
-/* STEP */
 .step{
   padding:6px;
   margin:6px;
   background:rgba(255,255,255,0.05);
   border-radius:6px;
-}
-
-/* IMAGE */
-.thumbnail{
-  width:90%;
-  margin:10px auto;
-  display:block;
-  border-radius:10px;
-  cursor:pointer;
 }
 
 /* ACTION */
@@ -146,24 +195,36 @@ button{
   cursor:pointer;
 }
 
-/* FORM */
-#form{
+/* ===== MODAL ===== */
+#formModal{
+  position:fixed;
+  inset:0;
   display:none;
-  margin-bottom:10px;
+  justify-content:center;
+  align-items:center;
   background:rgba(0,0,0,0.5);
-  padding:10px;
-  border-radius:10px;
 }
 
-input,select,textarea{
+#formBox{
+  width:420px;
+  padding:20px;
+  border-radius:16px;
+  background:rgba(20,20,20,0.95); /* no blur = no lag */
+}
+
+#formBox input,
+#formBox select,
+#formBox textarea{
   width:100%;
-  margin-bottom:6px;
-  padding:8px;
+  margin-bottom:8px;
+  padding:10px;
+  border-radius:8px;
   border:none;
-  border-radius:6px;
+  background:rgba(255,255,255,0.08);
+  color:white;
 }
 
-/* MODAL */
+/* IMAGE MODAL */
 #imageModal{
   display:none;
   position:fixed;
@@ -213,7 +274,6 @@ input,select,textarea{
 </div>
 
 <div id="dataPage" class="page">
-
   <div class="topbar">
     <select id="filterSite">
       <option value="all">Semua</option>
@@ -227,28 +287,27 @@ input,select,textarea{
     <button onclick="openAdd()">+ Tambah</button>
   </div>
 
-  <div id="form">
+  <div id="list" class="grid"></div>
+</div>
+
+</div>
+</div>
+
+<!-- MODAL -->
+<div id="formModal">
+  <div id="formBox">
     <input id="title" placeholder="Judul">
     <textarea id="content" placeholder="Isi"></textarea>
-
     <select id="site">
       <option value="edan777">edan777</option>
       <option value="republik62">republik62</option>
       <option value="warga62">warga62</option>
       <option value="istana62">istana62</option>
     </select>
-
     <input id="image" placeholder="Link Gambar">
-
     <button onclick="save()">Simpan</button>
-    <button onclick="cancel()">Batal</button>
+    <button onclick="closeForm()">Batal</button>
   </div>
-
-  <div id="list" class="grid"></div>
-
-</div>
-
-</div>
 </div>
 
 <div id="imageModal" onclick="closeImage()">
@@ -299,20 +358,20 @@ function render(){
 
   list.innerHTML=filteredData.map((d,i)=>`
   <div class="card">
-    <div class="card-header ${d.site}" onclick="toggle(${i})">
-      <div>${d.title}</div>
-      <div class="site-tag">${d.site}</div>
-    </div>
+    <div class="card-inner">
+      <div class="card-header" onclick="toggle(${i})">
+        <div>${d.title}</div>
+        <div class="site-tag">${d.site}</div>
+      </div>
 
-    <div class="card-content" id="c${i}">
-      ${d.content.split("\n").map(x=>`<div class="step">✔ ${x}</div>`).join("")}
-
-      ${d.image?`<img src="${d.image}" class="thumbnail" onclick="showImage('${d.image}')">`:''}
-
-      <div class="actions">
-        <button onclick="copy(${i})">Copy</button>
-        <button onclick="edit(${i})">Edit</button>
-        <button onclick="del('${d.uid}')">Hapus</button>
+      <div class="card-content" id="c${i}">
+        ${d.content.split("\\n").map(x=>`<div class="step">✔ ${x}</div>`).join("")}
+        ${d.image?`<img src="${d.image}" class="thumbnail" onclick="showImage('${d.image}')">`:''}
+        <div class="actions">
+          <button onclick="copy(${i})">Copy</button>
+          <button onclick="edit(${i})">Edit</button>
+          <button onclick="del('${d.uid}')">Hapus</button>
+        </div>
       </div>
     </div>
   </div>
@@ -323,7 +382,8 @@ function toggle(i){
   document.getElementById("c"+i).classList.toggle("active");
 }
 
-function openAdd(){ editId=null; form.style.display="block"; }
+function openAdd(){ editId=null; formModal.style.display="flex"; }
+function closeForm(){ formModal.style.display="none"; }
 
 function edit(i){
   const d=filteredData[i];
@@ -332,7 +392,7 @@ function edit(i){
   content.value=d.content;
   image.value=d.image;
   site.value=d.site;
-  form.style.display="block";
+  formModal.style.display="flex";
 }
 
 async function save(){
@@ -348,7 +408,7 @@ async function save(){
       image:image.value
     })
   });
-  form.style.display="none";
+  formModal.style.display="none";
   load();
 }
 
@@ -360,8 +420,6 @@ async function del(uid){
   });
   load();
 }
-
-function cancel(){ form.style.display="none"; }
 
 function copy(i){
   const d=filteredData[i];
